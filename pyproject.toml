@@ -1,0 +1,65 @@
+[project]
+name = "wagtail-tinytableblock"
+description = "A Wagtail StreamField block powered by TinyMCE and its table plugin"
+authors = [{name = "Dan Braghis", email = "dan.braghis@torchbox.com"}]
+maintainers = [
+    {name = "Dan Braghis", email="dan.braghis@torchbox.com"}
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = ["Wagtail", "Django", "StreamField", "TinyMCE", "Tables"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.1",
+    "Framework :: Wagtail",
+    "Framework :: Wagtail :: 6",
+]
+
+dynamic = ["version"]
+requires-python = ">=3.12"
+dependencies = [
+    "Django>=4.2",
+    "Wagtail>=6.3",
+    "nh3>=0.2.21,<0.3"
+]
+
+[project.optional-dependencies]
+testing = [
+    "dj-database-url>=2.1.0,<3.0",
+    "coverage>=7.0,<8.0",
+]
+
+[project.urls]
+Source = "https://github.com/torchbox/wagtail-tinytableblock"
+Changelog = "https://github.com/torchbox/wagtail-tinytableblock/blob/main/CHANGELOG.md"
+
+
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "wagtail_tinytableblock"
+
+[tool.flit.sdist]
+exclude = [
+    ".*",
+    "*.db",
+    "*.json",
+    "*.ini",
+    "*.sqlite3",
+    "*.yaml",
+    "tests",
+    "CHANGELOG.md",
+    "ruff.toml",
+    "testmanage.py",
+]
