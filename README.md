@@ -73,6 +73,30 @@ class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(allow_links=True)
 ```
 
+
+## Data representation
+
+The table data is saved as a JSON-serialized dictionary with the following keys:
+
+```python
+{
+   "headers": [],
+   "rows": [],
+   "content": the_sanitised_html
+}
+```
+
+`headers` / `rows` are lists of lists with cell values. Each cell is a dictionary with the following keys
+
+ key | value notes
+-----|---------
+`value` | The cell value
+`type` | "td" or "th"
+`rowspan` | if set
+`colspan` | if set
+`scope` | if set
+`align` | if set
+
 ## Contributing
 
 All contributions are welcome! See [CONTRIBUTING.md](https://github.com/torchbox/wagtail-tinytableblock/blob/main/CONTRIBUTING.md)
