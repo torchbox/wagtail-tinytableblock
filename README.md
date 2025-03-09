@@ -15,6 +15,16 @@
 
 TinyTableBlock is a StreamField block powered by [TinyMCE](https://www.tiny.cloud/) and its [table plugin](https://www.tiny.cloud/docs/tinymce/latest/table/).
 
+Wagtail provides [`TableBlock`](https://docs.wagtail.org/en/stable/reference/contrib/table_block.html) and
+[`TypedTableBlock`](https://docs.wagtail.org/en/stable/reference/contrib/typed_table_block.html)
+which are good options if you want basic tables with some cell merging capability or StreamField-powered cell, but they have their limitations:
+- `TableBlock` is using an old version of [handsontable](https://github.com/handsontable/handsontable/tree/6.2.2). It doesn't support multi-row header, column headers, nor pasting complex tables.
+- `TypedTableBlock` gets complex quickly depending on the types of blocks you add, and pasting is limited to single cells.
+-
+Wagtail TinyTableBlock (this package) provides the TinyMCE table editor which has improved copy/paste, multi-row and column headers, external link support and more.
+It does not currently support the Wagtail rich text [data format](https://docs.wagtail.org/en/stable/extending/rich_text_internals.html#data-format) for page and document links,
+nor does it support embedding images.
+
 ## Installation
 
 In your project's Django settings, add the app your `INSTALLED_APPS` list (at the end is fine):
