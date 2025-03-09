@@ -7,10 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.2] - 2025-03-09
+
+### Added
+
+- Ability to enable the TinyMCE link plugin ([#5](https://github.com/torchbox/wagtail-tinytableblock/pull/5))
+- Better documentation
+
+### Changed
+
+- Improved the table parsing. All cells in a `thead` are now considered header cells ([#5](https://github.com/torchbox/wagtail-tinytableblock/pull/5))
+
 ## [0.1] - 2025-03-04
 
 Initial release
 
 
-[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.1...HEAD
+[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2...HEAD
+[0.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.1...v0.2
 [0.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/9b5dec2...v0.1
