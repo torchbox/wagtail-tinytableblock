@@ -29,6 +29,7 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
         contextmenu_never_use_native: true,
         skin: (window.matchMedia("(prefers-color-scheme: dark)").matches ? "oxide-dark" : "oxide"),
         content_css: (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "default"),
+        content_style: 'thead th, thead td { font-weight: 700; }',
         statusbar: false,
         branding: false,
         promotion: false,
