@@ -15,6 +15,16 @@
 
 TinyTableBlock is a StreamField block powered by [TinyMCE](https://www.tiny.cloud/) and its [table plugin](https://www.tiny.cloud/docs/tinymce/latest/table/).
 
+Wagtail provides [`TableBlock`](https://docs.wagtail.org/en/stable/reference/contrib/table_block.html) and
+[`TypedTableBlock`](https://docs.wagtail.org/en/stable/reference/contrib/typed_table_block.html)
+which are good options if you want basic tables with some cell merging capability or StreamField-powered cell, but they have their limitations:
+- `TableBlock` is using an old version of [handsontable](https://github.com/handsontable/handsontable/tree/6.2.2). It doesn't support multi-row header, column headers, nor pasting complex tables.
+- `TypedTableBlock` gets complex quickly depending on the types of blocks you add, and pasting is limited to single cells.
+-
+Wagtail TinyTableBlock (this package) provides the TinyMCE table editor which has improved copy/paste, multi-row and column headers, external link support and more.
+It does not currently support the Wagtail rich text [data format](https://docs.wagtail.org/en/stable/extending/rich_text_internals.html#data-format) for page and document links,
+nor does it support embedding images.
+
 ## Installation
 
 In your project's Django settings, add the app your `INSTALLED_APPS` list (at the end is fine):
@@ -49,6 +59,43 @@ Finally, run Django's `makemigrations` and `migrate` commands to apply any model
 $ python manage.py makemigrations
 $ python manage.py migrate
 ```
+
+## Configuration
+
+`TinyTableBlock` accepts an `allow_links` keyword argument which allows enabling the TinyMCE link
+plugin. Note: this currently only works with external URLs.
+
+```python
+from wagtail.blocks import StreamBlock
+from wagtail_tinytableblock.blocks import TinyTableBlock
+
+class ContentBlocks(StreamBlock):
+    table_block = TinyTableBlock(allow_links=True)
+```
+
+
+## Data representation
+
+The table data is saved as a JSON-serialized dictionary with the following keys:
+
+```python
+{
+   "headers": [],
+   "rows": [],
+   "content": the_sanitised_html
+}
+```
+
+`headers` / `rows` are lists of lists with cell values. Each cell is a dictionary with the following keys
+
+ key | value notes
+-----|---------
+`value` | The cell value
+`type` | "td" or "th"
+`rowspan` | if set
+`colspan` | if set
+`scope` | if set
+`align` | if set
 
 ## Contributing
 

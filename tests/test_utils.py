@@ -31,7 +31,7 @@ class UtilsTestCase(TestCase):
             <thead>
                 <tr>
                     <th>Header 1</th>
-                    <th>Header 2</th>
+                    <td>Header 2</td>
                 </tr>
             </thead>
             <tbody>
@@ -45,14 +45,34 @@ class UtilsTestCase(TestCase):
         result = html_table_to_dict(html)
 
         self.assertEqual(len(result["headers"]), 1)
-        self.assertEqual(len(result["headers"][0]), 2)
-        self.assertEqual(result["headers"][0][0]["value"], "Header 1")
-        self.assertEqual(result["headers"][0][0]["type"], "th")
+        self.assertListEqual(
+            result["headers"][0],
+            [
+                {
+                    "value": "Header 1",
+                    "type": "th",
+                },
+                {
+                    "value": "Header 2",
+                    "type": "th",
+                },
+            ],
+        )
 
         self.assertEqual(len(result["rows"]), 1)
-        self.assertEqual(len(result["rows"][0]), 2)
-        self.assertEqual(result["rows"][0][0]["value"], "Cell 1")
-        self.assertEqual(result["rows"][0][0]["type"], "td")
+        self.assertListEqual(
+            result["rows"][0],
+            [
+                {
+                    "value": "Cell 1",
+                    "type": "td",
+                },
+                {
+                    "value": "Cell 2",
+                    "type": "td",
+                },
+            ],
+        )
 
         self.assertEqual(result["html"], html)
 

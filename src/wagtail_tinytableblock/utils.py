@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import nh3
 
@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 
 if TYPE_CHECKING:
     from bs4.element import Tag
+
+Cell = Literal["td", "th"]
 
 
 def sanitise_html(content: str) -> str:
@@ -23,8 +25,8 @@ def sanitise_html(content: str) -> str:
     )
 
 
-def get_cell_data(cell: "Tag") -> dict[str, str | int]:
-    cell_data = {"value": cell.text.strip(), "type": cell.name}
+def get_cell_data(cell: "Tag", forced_type: Cell | None = None) -> dict[str, str | int]:
+    cell_data = {"value": cell.text.strip(), "type": forced_type or cell.name}
 
     if (rowspan := int(cell.get("rowspan", 1))) > 1:
         cell_data["rowspan"] = rowspan
@@ -69,7 +71,13 @@ def html_table_to_dict(content: str) -> dict:
     headers = []
     if thead := table.find("thead"):
         for header_row in thead.find_all("tr"):
-            headers.append([get_cell_data(cell) for cell in header_row.find_all("th")])
+            # find all cells in thead and store them as th
+            headers.append(
+                [
+                    get_cell_data(cell, forced_type="th")
+                    for cell in header_row.find_all(["th", "td"])
+                ]
+            )
 
         if tbody_rows := table.find("tbody"):
             table_rows = tbody_rows.find_all("tr")
@@ -85,12 +93,12 @@ def html_table_to_dict(content: str) -> dict:
     for row in table_rows:
         rows.append([get_cell_data(cell) for cell in row.find_all(["td", "th"])])
 
+    # given we start with an empty 2x2 table, if that is submitted, then we have something like
+    # [[{'type': 'td', 'value': ''}, {'type': 'td', 'value': ''}]], but we want []
     if check_all_cells_are_empty(headers):
         headers = []
 
     if check_all_cells_are_empty(rows):
-        # given we start with an empty 2x2 table, if that is submitted, then we have something like
-        # [[{'type': 'td', 'value': ''}, {'type': 'td', 'value': ''}]], but we want []
         rows = []
 
     data = {
