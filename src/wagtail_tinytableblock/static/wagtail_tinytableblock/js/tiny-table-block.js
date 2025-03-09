@@ -3,12 +3,21 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
   render(placeholder, prefix, initialState, initialError) {
     const block = super.render(placeholder, prefix, initialState, initialError);
 
+    let plugins = "table autoresize";
+    let toolbar = "undo redo | tablerowheader tablecolheader tablemergecells tablesplitcells | tableinsertcolbefore tableinsertcolafter tableinsertrowbefore tableinsertrowafter";
+    let valid_elements = "br,table[border|width|height|align|summary],tr[align|valign],td[align|valign|width|colspan|rowspan],th[align|valign|width|colspan|rowspan|scope],thead,tbody";
+    if (this.meta.enableLinks) {
+        plugins += " link autolink";
+        toolbar += " | link";
+        valid_elements += ",a[href|target|rel]";
+    }
+
     tinymce.init({
         selector: "#" + prefix,
-        plugins: "table autoresize",
+        plugins: plugins,
         menubar: "",
-        toolbar: "undo redo | tablerowheader tablecolheader tablemergecells tablesplitcells | tableinsertcolbefore tableinsertcolafter tableinsertrowbefore tableinsertrowafter",
-        valid_elements: 'br,table[border|width|height|align|summary],tr[align|valign],td[align|valign|width|colspan|rowspan],th[align|valign|width|colspan|rowspan|scope],thead,tbody,a[href|target|rel]',
+        toolbar: toolbar,
+        valid_elements: valid_elements,
         table_toolbar: "",  // disable the floating toolbar
         table_advtab: false,
         table_appearance_options: false,

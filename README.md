@@ -50,6 +50,19 @@ $ python manage.py makemigrations
 $ python manage.py migrate
 ```
 
+## Configuration
+
+`TinyTableBlock` accepts an `allow_links` keyword argument which allows enabling the TinyMCE link
+plugin. Note: this currently only works with external URLs.
+
+```python
+from wagtail.blocks import StreamBlock
+from wagtail_tinytableblock.blocks import TinyTableBlock
+
+class ContentBlocks(StreamBlock):
+    table_block = TinyTableBlock(allow_links=True)
+```
+
 ## Contributing
 
 All contributions are welcome! See [CONTRIBUTING.md](https://github.com/torchbox/wagtail-tinytableblock/blob/main/CONTRIBUTING.md)

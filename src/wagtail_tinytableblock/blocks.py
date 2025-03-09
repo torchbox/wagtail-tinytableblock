@@ -55,6 +55,13 @@ class TinyTableFieldBlock(FieldBlock):
 class TinyTableBlockAdapter(FieldBlockAdapter):
     js_constructor = "streamblock.blocks.TinyTableBlockAdapter"
 
+    def js_args(self, block) -> list:
+        the_args = super().js_args(block)
+
+        the_args[2]["enableLinks"] = block.meta.allow_links
+
+        return the_args
+
     @cached_property
     def media(self) -> Media:
         field_media = super().media
@@ -72,8 +79,17 @@ register(TinyTableBlockAdapter(), TinyTableFieldBlock)
 class TinyTableBlock(StructBlock):
     title = CharBlock(required=False)
     caption = CharBlock(required=False)
-    data = TinyTableFieldBlock(required=False)
+
+    def __init__(self, *, local_blocks=None, search_index=True, **kwargs):
+        super().__init__(local_blocks=local_blocks, search_index=search_index, **kwargs)
+        # manually define the data block so we can pass on configuration kwargs
+        block = TinyTableFieldBlock(
+            required=False, allow_links=kwargs.get("allow_links", False)
+        )
+        block.set_name("data")
+        self.child_blocks["data"] = block
 
     class Meta:
         icon = "table"
         template = "wagtail_tinytableblock/table_block.html"
+        allow_links = False
