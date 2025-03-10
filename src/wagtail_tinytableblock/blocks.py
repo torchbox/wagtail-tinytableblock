@@ -38,7 +38,7 @@ class TinyTableFieldBlock(FieldBlock):
         try:
             return dict(json.loads(value))
         except (json.decoder.JSONDecodeError, TypeError, ValueError):
-            return html_table_to_dict(value)
+            return html_table_to_dict(value, allow_links=self.meta.allow_links)
 
     def value_for_form(self, value: dict | None) -> str:
         return json.dumps(value)

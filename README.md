@@ -82,7 +82,7 @@ The table data is saved as a JSON-serialized dictionary with the following keys:
 {
    "headers": [],
    "rows": [],
-   "content": the_sanitised_html
+   "html": the_sanitised_html
 }
 ```
 

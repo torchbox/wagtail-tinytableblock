@@ -1,3 +1,4 @@
+from html import unescape
 from typing import TYPE_CHECKING, Literal
 
 import nh3
@@ -11,22 +12,28 @@ if TYPE_CHECKING:
 Cell = Literal["td", "th"]
 
 
-def sanitise_html(content: str) -> str:
+def sanitise_html(content: str, *, allow_links: bool = False) -> str:
+    tags: set[str] = {"table", "tr", "th", "td", "thead", "tbody", "caption"}
+    attributes: dict[str, set[str]] = {
+        "*": {"class"},
+        "th": {"colspan", "rowspan", "align", "scope"},
+        "td": {"colspan", "rowspan", "align", "scope"},
+    }
+    if allow_links:
+        tags |= {"a"}
+        attributes["a"] = {"href", "rel", "title"}
+
     return nh3.clean(  # pylint: disable=no-member
-        content,
-        tags={"table", "tr", "th", "td", "thead", "tbody", "a", "caption"},
-        attributes={
-            "*": {"class"},
-            "th": {"colspan", "rowspan", "align", "scope"},
-            "td": {"colspan", "rowspan", "align", "scope"},
-            "a": {"href", "rel"},
-        },
+        unescape(content),
+        tags=tags,
+        attributes=attributes,
         link_rel=None,
     )
 
 
 def get_cell_data(cell: "Tag", forced_type: Cell | None = None) -> dict[str, str | int]:
-    cell_data = {"value": cell.text.strip(), "type": forced_type or cell.name}
+    value = "".join(str(child) for child in cell.children)
+    cell_data = {"value": value, "type": forced_type or cell.name}
 
     if (rowspan := int(cell.get("rowspan", 1))) > 1:
         cell_data["rowspan"] = rowspan
@@ -48,7 +55,7 @@ def check_all_cells_are_empty(rows: list[list[dict[str, str | int]]]) -> bool:
     return True
 
 
-def html_table_to_dict(content: str) -> dict:
+def html_table_to_dict(content: str, *, allow_links: bool = False) -> dict:
     """Take an HTML table and convert it to a dictionary.
 
     The dictionary has the following structure:
@@ -56,7 +63,7 @@ def html_table_to_dict(content: str) -> dict:
     - rows - a list of row lists, each containing the cell info
     - html - the original html
     """
-    content = sanitise_html(content)
+    content = sanitise_html(content, allow_links=allow_links)
     soup = BeautifulSoup(content, "html.parser")
 
     table = soup.find("table")

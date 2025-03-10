@@ -204,9 +204,49 @@ class UtilsTestCase(TestCase):
         self.assertEqual(len(result["headers"][1]), 3)
         self.assertEqual(result["headers"][1][0]["value"], "Sub Header 1")
 
-    def test_sanitisation(self):
+    def test_sanitisation__with_links(self):
         html = """
         <h1>H1</h1>
+        <table>
+            <thead class="foo">
+                <tr>
+                    <th data-test"foo" valign="middle" colspan="1">Header 1</th>
+                    <th class="highlight" align="right">Header 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="1"><a href="&#106avascript:alert(1)">Cell <strong>1</strong></a></td>
+                    <td><a href="#" click='alert(\\'XSS\\')' rel="next">Cell 2</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <script>alert("Gotcha!");</script>
+        &lt;script&gt;alert('xss');&lt;/script&gt;
+        """
+        expected = """
+        H1
+        <table>
+            <thead class="foo">
+                <tr>
+                    <th colspan="1">Header 1</th>
+                    <th class="highlight" align="right">Header 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="1"><a>Cell 1</a></td>
+                    <td><a href="#" rel="next">Cell 2</a></td>
+                </tr>
+            </tbody>
+        </table>
+        """
+
+        sanitised = sanitise_html(html, allow_links=True)
+        self.assertEqual(sanitised.strip(), expected.strip())
+
+    def test_sanitisation__no_links(self):
+        html = """
         <table>
             <thead class="foo">
                 <tr>
@@ -221,10 +261,8 @@ class UtilsTestCase(TestCase):
                 </tr>
             </tbody>
         </table>
-        <script>alert("Gotcha!");</script>
         """
         expected = """
-        H1
         <table>
             <thead class="foo">
                 <tr>
@@ -235,7 +273,7 @@ class UtilsTestCase(TestCase):
             <tbody>
                 <tr>
                     <td rowspan="1">Cell 1</td>
-                    <td><a href="#" rel="next">Cell 2</a></td>
+                    <td>Cell 2</td>
                 </tr>
             </tbody>
         </table>
