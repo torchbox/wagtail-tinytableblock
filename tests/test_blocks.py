@@ -31,8 +31,8 @@ class BlockTestCase(TestCase):
         self.assertIn(f"<h2>{self.full_data['title']}</h2>", rendered)
         self.assertIn(f"<caption>{self.full_data['caption']}</caption>", rendered)
         self.assertIn("<table>", rendered)
-        self.assertIn("header cell", rendered)
-        self.assertIn("row cell", rendered)
+        self.assertInHTML("<th>header cell</th>", rendered)
+        self.assertInHTML("<td>row cell</td>", rendered)
 
     def test_render_block__no_table(self):
         rendered = self.block.render(self.data_with_empty_table)
@@ -54,3 +54,18 @@ class BlockTestCase(TestCase):
         )
         self.assertIn("<caption>Caption this!</caption>", rendered)
         self.assertNotIn("<h2>", rendered)
+
+    def test_render_block__with_links(self):
+        block = TinyTableBlock(allow_links=True)
+        rendered = block.render(
+            {
+                "data": {
+                    "headers": [
+                        [{"value": '<a href="#">header cell</a>', "type": "th"}]
+                    ],
+                    "rows": [[{"value": '<a href="#">row cell</a>', "type": "td"}]],
+                }
+            }
+        )
+        self.assertInHTML('<a href="#">header cell</a>', rendered)
+        self.assertInHTML('<a href="#">row cell</a>', rendered)
