@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.2.2] - 2025-03-18
+
+### Changed
+
+- Added the copy / paste buttons to the toolbar and contextual menu ([#7](https://github.com/torchbox/wagtail-tinytableblock/pull/7))
+
 ## [0.2.1] - 2025-03-11
 
 ### Changed
@@ -30,7 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Initial release
 
 
-[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.1...HEAD
+[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2...v0.2.1
 [0.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.1...v0.2
 [0.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/9b5dec2...v0.1
