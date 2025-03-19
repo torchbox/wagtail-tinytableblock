@@ -73,6 +73,17 @@ class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(allow_links=True)
 ```
 
+By default, we disable the TinyMCE contextual menu to allow the browser native one. If you want to use TinyMCE one,
+pass `enable_context_menu=True`:
+
+```python
+from wagtail.blocks import StreamBlock
+from wagtail_tinytableblock.blocks import TinyTableBlock
+
+class ContentBlocks(StreamBlock):
+    table_block = TinyTableBlock(enable_context_menu=True)
+```
+
 
 ## Data representation
 

@@ -59,6 +59,7 @@ class TinyTableBlockAdapter(FieldBlockAdapter):
         the_args = super().js_args(block)
 
         the_args[2]["enableLinks"] = block.meta.allow_links
+        the_args[2]["enableContextMenu"] = block.meta.enable_context_menu
 
         return the_args
 
@@ -84,7 +85,9 @@ class TinyTableBlock(StructBlock):
         super().__init__(local_blocks=local_blocks, search_index=search_index, **kwargs)
         # manually define the data block so we can pass on configuration kwargs
         block = TinyTableFieldBlock(
-            required=False, allow_links=kwargs.get("allow_links", False)
+            required=False,
+            allow_links=kwargs.get("allow_links", False),
+            enable_context_menu=kwargs.get("enable_context_menu", False),
         )
         block.set_name("data")
         self.child_blocks["data"] = block
@@ -93,3 +96,4 @@ class TinyTableBlock(StructBlock):
         icon = "table"
         template = "wagtail_tinytableblock/table_block.html"
         allow_links = False
+        enable_context_menu = False
