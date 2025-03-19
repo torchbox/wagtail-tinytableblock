@@ -4,7 +4,7 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
     const block = super.render(placeholder, prefix, initialState, initialError);
 
     let plugins = "table autoresize";
-    let toolbar = "undo redo copy paste | tablerowheader tablecolheader tablemergecells tablesplitcells | tableinsertcolbefore tableinsertcolafter tableinsertrowbefore tableinsertrowafter";
+    let toolbar = "undo redo copy paste | tablerowheader tablecolheader tablemergecells tablesplitcells | tableinsertcolbefore tableinsertcolafter tableinsertrowbefore tableinsertrowafter tabledelete";
     let contextmenu = "copy paste table";
     let valid_elements = "br,table[border|width|height|align|summary],tr[align|valign],td[align|valign|width|colspan|rowspan],th[align|valign|width|colspan|rowspan|scope],thead,tbody";
     if (this.meta.enableLinks) {
@@ -12,6 +12,12 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
         toolbar += " | link";
         contextmenu += " link";
         valid_elements += ",a[href|target|rel]";
+    }
+
+    let contextmenu_never_use_native = true;
+    if (!this.meta.enableContextMenu) {
+        contextmenu = false;
+        contextmenu_never_use_native = false;
     }
 
     tinymce.init({
@@ -29,7 +35,7 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
         table_sizing_mode: 'responsive',
         table_resize_bars: false,
         object_resizing: false,
-        contextmenu_never_use_native: true,
+        contextmenu_never_use_native: contextmenu_never_use_native,
         skin: (window.matchMedia("(prefers-color-scheme: dark)").matches ? "oxide-dark" : "oxide"),
         content_css: (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "default"),
         content_style: 'thead th, thead td { font-weight: 700; }',
