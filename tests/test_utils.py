@@ -167,6 +167,63 @@ class UtilsTestCase(TestCase):
         self.assertEqual(result["headers"][0][0]["value"], "Header 1")
         self.assertEqual(result["rows"][0][0]["value"], "Cell 1")
 
+    def test_table_with_style_attributes(self):
+        """Test parsing a simple table with thead and tbody."""
+        html = """
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px; text-align: left; vertical-align: top; color: red;">Header 1</th>
+                    <td align="right" style="width: 10%; text-align: center; display: none;">Header 2</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        result = html_table_to_dict(html)
+
+        self.assertEqual(len(result["headers"]), 1)
+        self.assertListEqual(
+            result["headers"][0],
+            [
+                {
+                    "value": "Header 1",
+                    "type": "th",
+                    "align": "left",
+                    "valign": "top",
+                    "width": "50px",
+                },
+                {
+                    "value": "Header 2",
+                    "type": "th",
+                    "align": "center",
+                    "width": "10%",
+                },
+            ],
+        )
+
+        self.assertEqual(len(result["rows"]), 1)
+        self.assertListEqual(
+            result["rows"][0],
+            [
+                {
+                    "value": "Cell 1",
+                    "type": "td",
+                },
+                {
+                    "value": "Cell 2",
+                    "type": "td",
+                },
+            ],
+        )
+
+        self.assertEqual(result["html"], html)
+
     def test_multiple_headers_structure(self):
         """Test parsing a table with complex nested structure."""
         html = """
@@ -247,16 +304,16 @@ class UtilsTestCase(TestCase):
 
     def test_sanitisation__no_links(self):
         html = """
-        <table>
-            <thead class="foo">
+        <table style="width: 100%;">
+            <thead class="foo" style="width: 100%;">
                 <tr>
-                    <th data-test"foo" valign="middle" colspan="1">Header 1</th>
+                    <th data-test"foo" valign="middle" colspan="1" style="color: red;">Header 1</th>
                     <th class="highlight" align="right">Header 2</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="width: 100%;">
                 <tr>
-                    <td rowspan="1">Cell <strong>1</strong></td>
+                    <td rowspan="1" style="text-align: right;">Cell <strong>1</strong></td>
                     <td><a href="#" click='alert(\\'XSS\\')' rel="next">Cell 2</a></td>
                 </tr>
             </tbody>
@@ -266,13 +323,13 @@ class UtilsTestCase(TestCase):
         <table>
             <thead class="foo">
                 <tr>
-                    <th colspan="1">Header 1</th>
+                    <th colspan="1" style="color: red;">Header 1</th>
                     <th class="highlight" align="right">Header 2</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td rowspan="1">Cell 1</td>
+                    <td rowspan="1" style="text-align: right;">Cell 1</td>
                     <td>Cell 2</td>
                 </tr>
             </tbody>
