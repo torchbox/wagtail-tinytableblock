@@ -42,6 +42,7 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
         table_sizing_mode: 'responsive',
         table_resize_bars: false,
         object_resizing: false,
+        newline_behavior: "linebreak",
         contextmenu_never_use_native: contextmenu_never_use_native,
         skin: (window.matchMedia("(prefers-color-scheme: dark)").matches ? "oxide-dark" : "oxide"),
         content_css: (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "default"),
@@ -90,7 +91,22 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
                 e.preventDefault();
               }
           });
-        }
+        },
+        paste_preprocess: function(editor, args) {
+            // Check if the current selection is inside a table cell
+            const isTableCell = editor.dom.getParent(editor.selection.getNode(), 'td,th');
+
+            if (isTableCell) {
+              // Replace newlines with <br> tags
+              args.content = args.content.replace(/\n/g, '<br>');
+
+              // Also unwrap any paragraphs that might come with the paste
+              args.content = args.content.replace(/<p>(.*?)<\/p>/g, '$1<br>');
+
+              // Remove trailing <br> if present
+              args.content = args.content.replace(/<br>$/, '');
+            }
+          }
     });
 
     return block;

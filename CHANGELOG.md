@@ -7,13 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-## [0.3.1] - 2025-04-01
+## [0.3.2] - 2025-04-02
+
+## Fixed
+
+- Line breaks were stripped out ([#11](https://github.com/torchbox/wagtail-tinytableblock/pull/11))
+
+
+## [0.3.1] - 2025-04-02
 
 ## Added
 
 - The missing unlink toolbar icon, when links are enabled
 
-## [0.3] - 2025-04-01
+## [0.3] - 2025-04-02
 
 ## Added
 
@@ -63,6 +70,7 @@ Initial release
 
 
 [unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.3...HEAD
+[0.3.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3...v0.3.1
 [0.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.4...v0.3
 [0.2.4]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.3...v0.2.4
