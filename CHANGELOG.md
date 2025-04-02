@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.3] - 2025-04-01
+
+## Added
+
+- The delete cell/row buttons ([#10](https://github.com/torchbox/wagtail-tinytableblock/pull/10))
+- Support for cell alignment and width ([#10](https://github.com/torchbox/wagtail-tinytableblock/pull/10))
+
 ## [0.2.3] - 2025-03-31
 
 ### Changed
@@ -50,6 +57,8 @@ Initial release
 
 
 [unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.3...HEAD
+[0.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.4...v0.3
+[0.2.4]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2...v0.2.1
