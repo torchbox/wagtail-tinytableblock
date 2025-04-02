@@ -4,9 +4,15 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
     const block = super.render(placeholder, prefix, initialState, initialError);
 
     let plugins = "table autoresize";
-    let toolbar = "undo redo | tablerowheader tablecolheader tablemergecells tablesplitcells tablecellprops tablerowprops| tableinsertcolbefore tableinsertcolafter tableinsertrowbefore tableinsertrowafter | tabledeletecol tabledeleterow tabledelete";
+    let toolbar = "undo redo | tablerowheader tablecolheader tablemergecells tablesplitcells tablecellprops tablerowprops | tableinsertcolbefore tableinsertcolafter tableinsertrowbefore tableinsertrowafter | tabledeletecol tabledeleterow tabledelete";
     let contextmenu = "table";
-    let valid_elements = "br,table[border|width|height|align|summary],tr[align|valign],td[align|valign|width|colspan|rowspan],th[align|valign|width|colspan|rowspan|scope],thead,tbody";
+    let valid_elements = "br,table[border|width|height|align|summary|style],tr[align|valign|style],td[align|valign|width|colspan|rowspan|style],th[align|valign|width|colspan|rowspan|scope|style],thead,tbody";
+    const valid_styles = {
+        "th": "text-align,vertical-align,width",
+        "td": "text-align,vertical-align,width",
+        "tr": "text-align,width"
+      }
+
     if (this.meta.enableLinks) {
         plugins += " link autolink";
         toolbar += " | link";
@@ -27,6 +33,7 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
         toolbar: toolbar,
         contextmenu: contextmenu,
         valid_elements: valid_elements,
+        valid_styles: valid_styles,
         table_toolbar: "",  // disable the floating toolbar
         table_advtab: false,
         table_appearance_options: false,

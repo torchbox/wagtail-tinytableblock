@@ -1,3 +1,5 @@
+import re
+
 from html import unescape
 from typing import TYPE_CHECKING, Literal
 
@@ -16,8 +18,9 @@ def sanitise_html(content: str, *, allow_links: bool = False) -> str:
     tags: set[str] = {"table", "tr", "th", "td", "thead", "tbody", "caption"}
     attributes: dict[str, set[str]] = {
         "*": {"class"},
-        "th": {"colspan", "rowspan", "align", "scope"},
-        "td": {"colspan", "rowspan", "align", "scope"},
+        "th": {"colspan", "rowspan", "align", "scope", "style"},
+        "td": {"colspan", "rowspan", "align", "scope", "style"},
+        "tr": {"style"},
     }
     if allow_links:
         tags |= {"a"}
@@ -29,6 +32,38 @@ def sanitise_html(content: str, *, allow_links: bool = False) -> str:
         attributes=attributes,
         link_rel=None,
     )
+
+
+STYLE_PROPS_PATTERN = re.compile(r"([^\s:;]+)\s*:\s*([^;]+)")
+
+
+def clean_style_attributes(table: "Tag") -> None:
+    """
+    TinyMCE sets align/width props in the style attribute,
+    however nh3 does not yet support ammonia's filter_style_attributes.
+
+    TODO: remove once https://github.com/messense/nh3/issues/78 is fixed
+    """
+    allowed_map = {
+        "th": {"text-align", "vertical-align", "width"},
+        "td": {"text-align", "vertical-align", "width"},
+        "tr": {"text-align", "width"},
+    }
+    for tag in table.find_all(["tr", "th", "td"]):
+        if "style" not in tag.attrs:
+            continue
+
+        matches = STYLE_PROPS_PATTERN.findall(tag["style"])
+        filtered_styles = []
+        for prop, value in matches:
+            prop = prop.strip()
+            if prop in allowed_map[tag.name]:
+                filtered_styles.append(f"{prop.strip()}: {value.strip()}")
+
+        if filtered_styles:
+            tag["style"] = "; ".join(filtered_styles)
+        else:
+            del tag["style"]
 
 
 def get_cell_data(cell: "Tag", forced_type: Cell | None = None) -> dict[str, str | int]:
@@ -43,6 +78,15 @@ def get_cell_data(cell: "Tag", forced_type: Cell | None = None) -> dict[str, str
         cell_data["scope"] = scope
     if align := cell.get("align"):
         cell_data["align"] = align
+
+    if style := cell.get("style"):
+        matches = dict(STYLE_PROPS_PATTERN.findall(style))
+        if width := matches.get("width"):
+            cell_data["width"] = width
+        if align := matches.get("text-align"):
+            cell_data["align"] = align
+        if valign := matches.get("vertical-align"):
+            cell_data["valign"] = valign
 
     return cell_data
 
@@ -73,6 +117,8 @@ def html_table_to_dict(content: str, *, allow_links: bool = False) -> dict:
             "rows": [],
             "html": "",
         }
+
+    clean_style_attributes(table)
 
     # Extract headers
     headers = []
