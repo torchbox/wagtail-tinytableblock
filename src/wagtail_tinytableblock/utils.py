@@ -15,7 +15,7 @@ Cell = Literal["td", "th"]
 
 
 def sanitise_html(content: str, *, allow_links: bool = False) -> str:
-    tags: set[str] = {"table", "tr", "th", "td", "thead", "tbody", "caption"}
+    tags: set[str] = {"table", "tr", "th", "td", "thead", "tbody", "caption", "br"}
     attributes: dict[str, set[str]] = {
         "*": {"class"},
         "th": {"colspan", "rowspan", "align", "scope", "style"},

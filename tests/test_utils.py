@@ -36,7 +36,7 @@ class UtilsTestCase(TestCase):
             </thead>
             <tbody>
                 <tr>
-                    <td>Cell 1</td>
+                    <td>Cell on<br> on two lines</td>
                     <td>Cell 2</td>
                 </tr>
             </tbody>
@@ -64,7 +64,7 @@ class UtilsTestCase(TestCase):
             result["rows"][0],
             [
                 {
-                    "value": "Cell 1",
+                    "value": "Cell on<br/> on two lines",
                     "type": "td",
                 },
                 {
