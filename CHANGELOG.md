@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.3.3] - 2025-04-10
+
+## Changed
+
+- Improved paste handling with line breaks
+
 ## [0.3.2] - 2025-04-02
 
 ## Fixed
@@ -70,6 +76,7 @@ Initial release
 
 
 [unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.3...HEAD
+[0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3...v0.3.1
 [0.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.4...v0.3

@@ -93,18 +93,17 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
           });
         },
         paste_preprocess: function(editor, args) {
-            // Check if the current selection is inside a table cell
-            const isTableCell = editor.dom.getParent(editor.selection.getNode(), 'td,th');
-
-            if (isTableCell) {
-              // Replace newlines with <br> tags
-              args.content = args.content.replace(/\n/g, '<br>');
-
-              // Also unwrap any paragraphs that might come with the paste
-              args.content = args.content.replace(/<p>(.*?)<\/p>/g, '$1<br>');
-
-              // Remove trailing <br> if present
-              args.content = args.content.replace(/<br>$/, '');
+            if (editor.dom.getParent(editor.selection.getNode(), "td,th")) {
+                // Unwrap any paragraphs/divs that might come with the paste
+                args.content = args.content.replace(/<p>(.*?)<\/p>/g, '$1<br>');
+                args.content = args.content.replace(/<div>(.*?)<\/div>/g, '$1<br>');
+            }
+        },
+        paste_postprocess: function(editor, args) {
+            if (editor.dom.getParent(editor.selection.getNode(), "td,th")) {
+              // Replace newlines with <br> tags, and remove the trailing <br>
+              args.node.innerHTML = args.node.innerHTML.replace(/\n/g, '<br>');
+              args.node.innerHTML = args.node.innerHTML.replace(/<br>$/, '');
             }
           }
     });
