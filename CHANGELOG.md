@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.3.4] - 2025-04-10
+
+## Fixed
+
+- When pasting a table with text/markup before and after it, only the table is kept for formatting purposes.
+
 ## [0.3.3] - 2025-04-10
 
 ## Changed
@@ -76,6 +82,7 @@ Initial release
 
 
 [unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.3...HEAD
+[0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3...v0.3.1

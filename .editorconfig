@@ -10,5 +10,5 @@ insert_final_newline = true
 charset = utf-8
 end_of_line = lf
 
-[*.{yaml,yml,json,md}]
+[*.{js,yaml,yml,json,md}]
 indent_size = 2
