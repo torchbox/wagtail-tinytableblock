@@ -43,7 +43,7 @@ Add the `TinyTableBlock` model to your StreamField definition. For example
 from wagtail.fields import StreamField
 from wagtail.models import Page
 
-from wagtail_tinytableblock import TinyTableBlock
+from wagtail_tinytableblock.blocks import TinyTableBlock
 
 
 class WonderfulPage(Page):
