@@ -23,6 +23,7 @@ classifiers = [
     "Framework :: Django :: 5.2",
     "Framework :: Wagtail",
     "Framework :: Wagtail :: 6",
+    "Framework :: Wagtail :: 7",
 ]
 
 dynamic = ["version"]
