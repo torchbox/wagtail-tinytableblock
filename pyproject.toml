@@ -31,13 +31,13 @@ requires-python = ">=3.12"
 dependencies = [
     "Django>=4.2",
     "Wagtail>=6.3",
-    "nh3>=0.2.21,<0.3"
+    "nh3>=0.3,<1"
 ]
 
 [project.optional-dependencies]
 testing = [
-    "dj-database-url>=2.1.0,<3.0",
-    "coverage>=7.0,<8.0",
+    "dj-database-url>=3.0,<4",
+    "coverage>=7.10,<8.0",
 ]
 
 [project.urls]
@@ -63,5 +63,4 @@ exclude = [
     "tests",
     "CHANGELOG.md",
     "ruff.toml",
-    "testmanage.py",
 ]
