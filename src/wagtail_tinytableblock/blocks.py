@@ -7,9 +7,14 @@ from django.forms import Media
 from django.utils.functional import cached_property
 from wagtail.blocks import FieldBlock, StructBlock
 from wagtail.blocks.field_block import CharBlock, FieldBlockAdapter
-from wagtail.telepath import register
 
 from .utils import html_table_to_dict
+
+
+try:
+    from wagtail.admin.telepath import register
+except ImportError:
+    from wagtail.telepath import register
 
 
 class TinyTableFieldBlock(FieldBlock):

@@ -3,9 +3,8 @@ import re
 from html import unescape
 from typing import TYPE_CHECKING, Literal
 
-import nh3
-
 from bs4 import BeautifulSoup
+from nh3 import Cleaner
 
 
 if TYPE_CHECKING:
@@ -26,12 +25,12 @@ def sanitise_html(content: str, *, allow_links: bool = False) -> str:
         tags |= {"a"}
         attributes["a"] = {"href", "rel", "title"}
 
-    return nh3.clean(  # pylint: disable=no-member
-        unescape(content),
+    sanitizer = Cleaner(
         tags=tags,
         attributes=attributes,
         link_rel=None,
     )
+    return sanitizer.clean(unescape(content))  # pylint: disable=no-member
 
 
 STYLE_PROPS_PATTERN = re.compile(r"([^\s:;]+)\s*:\s*([^;]+)")
