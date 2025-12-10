@@ -7,34 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.4.0] - 2025-12-10
+
+### Added
+
+- Official support for Wagtail 7.2, Django 6, Python 3.14 ([#17](https://github.com/torchbox/wagtail-tinytableblock/pull/18))
+
+### Changed
+
+- TinyMCE updated to 7.9 ([#17](https://github.com/torchbox/wagtail-tinytableblock/pull/18))
+
 ## [0.3.4] - 2025-04-10
 
-## Fixed
+### Fixed
 
 - When pasting a table with text/markup before and after it, only the table is kept for formatting purposes.
 
 ## [0.3.3] - 2025-04-10
 
-## Changed
+### Changed
 
 - Improved paste handling with line breaks
 
 ## [0.3.2] - 2025-04-02
 
-## Fixed
+### Fixed
 
 - Line breaks were stripped out ([#11](https://github.com/torchbox/wagtail-tinytableblock/pull/11))
 
 
 ## [0.3.1] - 2025-04-02
 
-## Added
+### Added
 
 - The missing unlink toolbar icon, when links are enabled
 
 ## [0.3] - 2025-04-02
 
-## Added
+### Added
 
 - The delete cell/row buttons ([#10](https://github.com/torchbox/wagtail-tinytableblock/pull/10))
 - Support for cell alignment and width ([#10](https://github.com/torchbox/wagtail-tinytableblock/pull/10))
@@ -81,7 +91,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Initial release
 
 
-[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.2.3...HEAD
+[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.4...v0.4.0
 [0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.1...v0.3.2
