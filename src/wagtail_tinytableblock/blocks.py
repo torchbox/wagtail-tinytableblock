@@ -86,16 +86,16 @@ class TinyTableBlock(StructBlock):
     title = CharBlock(required=False)
     caption = CharBlock(required=False)
 
-    def __init__(self, *, local_blocks=None, search_index=True, **kwargs):
-        super().__init__(local_blocks=local_blocks, search_index=search_index, **kwargs)
-        # manually define the data block so we can pass on configuration kwargs
-        block = TinyTableFieldBlock(
+    def __init__(self, *, local_blocks=(), search_index=True, **kwargs):
+        # Manually define the data block so we can pass on configuration kwargs.
+        data_block = TinyTableFieldBlock(
             required=False,
             allow_links=kwargs.get("allow_links", False),
             enable_context_menu=kwargs.get("enable_context_menu", False),
         )
-        block.set_name("data")
-        self.child_blocks["data"] = block
+
+        local_blocks = (*local_blocks, ("data", data_block))
+        super().__init__(local_blocks=local_blocks, search_index=search_index, **kwargs)
 
     class Meta:
         icon = "table"
