@@ -49,7 +49,7 @@ jobs:
 
       - name: Test
         env:
-          TOXENV: py${{ matrix.python-version }}-django${{ matrix.django }}-wagtail${{ matrix.wagtail }}-sqlite
+          TOXENV: py${{ matrix.python-version }}-django${{ matrix.django }}-wagtail${{ matrix.wagtail }}
         run: tox --installpkg ./dist/*.whl
 
       - name: ⬆️ Upload coverage data
