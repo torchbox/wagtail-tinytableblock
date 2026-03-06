@@ -1,4 +1,6 @@
 from django.test import TestCase
+from unittest import skipIf
+import wagtail
 
 from wagtail_tinytableblock.blocks import TinyTableBlock
 
@@ -69,3 +71,9 @@ class BlockTestCase(TestCase):
         )
         self.assertInHTML('<a href="#">header cell</a>', rendered)
         self.assertInHTML('<a href="#">row cell</a>', rendered)
+
+    @skipIf(wagtail.VERSION < (7, 3), "Wagtail 7.3+ feature")
+    def test_form_layout_includes_all_fields(self):
+        block = TinyTableBlock(allow_links=True)
+        form_children = block.get_form_layout().children
+        self.assertEqual(["title", "caption", "data"], form_children)
