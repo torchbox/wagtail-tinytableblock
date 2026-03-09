@@ -90,15 +90,23 @@ class TinyTableBlock(StructBlock):
     title = CharBlock(required=False)
     caption = CharBlock(required=False)
 
-    def __init__(self, local_blocks: BlockDefinitions | None = None, search_index: bool = True, **kwargs) -> None:  # noqa: FBT001,FBT002
+    def __init__(
+        self,
+        local_blocks: BlockDefinitions | None = None,
+        search_index: bool = True,  # noqa: FBT001,FBT002
+        *,
+        allow_links: bool = False,
+        enable_context_menu: bool = False,
+        **kwargs
+    ) -> None:
         if local_blocks is None:
             local_blocks = ()
 
         # Manually define the data block so we can pass on configuration kwargs.
         data_block = TinyTableFieldBlock(
             required=False,
-            allow_links=kwargs.get("allow_links", False),
-            enable_context_menu=kwargs.get("enable_context_menu", False),
+            allow_links=allow_links,
+            enable_context_menu=enable_context_menu,
         )
 
         local_blocks = (*local_blocks, ("data", data_block))
