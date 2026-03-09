@@ -5,7 +5,8 @@ from typing import Any
 from django import forms
 from django.forms import Media
 from django.utils.functional import cached_property
-from wagtail.blocks import FieldBlock, StructBlock
+from collections.abc import Iterable
+from wagtail.blocks import Block, FieldBlock, StructBlock
 from wagtail.blocks.field_block import CharBlock, FieldBlockAdapter
 
 from .utils import html_table_to_dict
@@ -15,6 +16,9 @@ try:
     from wagtail.admin.telepath import register
 except ImportError:
     from wagtail.telepath import register
+
+
+type BlockDefinitions = Iterable[tuple[str, Block] | list[str | Block]]
 
 
 class TinyTableFieldBlock(FieldBlock):
@@ -86,7 +90,10 @@ class TinyTableBlock(StructBlock):
     title = CharBlock(required=False)
     caption = CharBlock(required=False)
 
-    def __init__(self, *, local_blocks=(), search_index=True, **kwargs):
+    def __init__(self, local_blocks: BlockDefinitions | None = None, search_index: bool = True, **kwargs) -> None:  # noqa: FBT001,FBT002
+        if local_blocks is None:
+            local_blocks = ()
+
         # Manually define the data block so we can pass on configuration kwargs.
         data_block = TinyTableFieldBlock(
             required=False,
