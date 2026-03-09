@@ -1,11 +1,11 @@
 import json
 
+from collections.abc import Iterable
 from typing import Any
 
 from django import forms
 from django.forms import Media
 from django.utils.functional import cached_property
-from collections.abc import Iterable
 from wagtail.blocks import Block, FieldBlock, StructBlock
 from wagtail.blocks.field_block import CharBlock, FieldBlockAdapter
 

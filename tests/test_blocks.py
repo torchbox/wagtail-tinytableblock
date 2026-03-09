@@ -1,5 +1,6 @@
-from django.test import TestCase
 from unittest import skipIf
+
+from django.test import TestCase
 from wagtail import VERSION as WAGTAIL_VERSION
 
 from wagtail_tinytableblock.blocks import TinyTableBlock
