@@ -49,7 +49,7 @@ jobs:
 
       - name: Test
         env:
-          TOXENV: py${{ matrix.python-version }}-django${{ matrix.django }}-wagtail${{ matrix.wagtail }}-sqlite
+          TOXENV: py${{ matrix.python-version }}-django${{ matrix.django }}-wagtail${{ matrix.wagtail }}
         run: tox --installpkg ./dist/*.whl
 
       - name: ⬆️ Upload coverage data
@@ -75,7 +75,14 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        # Use a very short interval to avoid getting out of sync with GHA's
+        # orchestration. This healthcheck controls how Docker determines the
+        # container's status, but the job orchestrator polls Docker with
+        # exponential backoff. When the healthcheck lands just after the
+        # orchestrator polls, you can get unreasonably long waits. This is a
+        # little dumb, but in practice cuts wait times by more than half.
+        # For more, see: https://github.com/actions/runner/issues/496
+        options: --health-cmd pg_isready --health-interval 1s --health-timeout 5s --health-retries 12
 
     steps:
       - uses: actions/checkout@v4

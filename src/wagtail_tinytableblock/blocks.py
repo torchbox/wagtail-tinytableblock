@@ -1,11 +1,12 @@
 import json
 
+from collections.abc import Iterable
 from typing import Any
 
 from django import forms
 from django.forms import Media
 from django.utils.functional import cached_property
-from wagtail.blocks import FieldBlock, StructBlock
+from wagtail.blocks import Block, FieldBlock, StructBlock
 from wagtail.blocks.field_block import CharBlock, FieldBlockAdapter
 
 from .utils import html_table_to_dict
@@ -15,6 +16,9 @@ try:
     from wagtail.admin.telepath import register
 except ImportError:
     from wagtail.telepath import register
+
+
+type BlockDefinitions = Iterable[tuple[str, Block] | list[str | Block]]
 
 
 class TinyTableFieldBlock(FieldBlock):
@@ -86,16 +90,27 @@ class TinyTableBlock(StructBlock):
     title = CharBlock(required=False)
     caption = CharBlock(required=False)
 
-    def __init__(self, *, local_blocks=None, search_index=True, **kwargs):
-        super().__init__(local_blocks=local_blocks, search_index=search_index, **kwargs)
-        # manually define the data block so we can pass on configuration kwargs
-        block = TinyTableFieldBlock(
+    def __init__(
+        self,
+        local_blocks: BlockDefinitions | None = None,
+        search_index: bool = True,  # noqa: FBT001,FBT002
+        *,
+        allow_links: bool = False,
+        enable_context_menu: bool = False,
+        **kwargs
+    ) -> None:
+        if local_blocks is None:
+            local_blocks = ()
+
+        # Manually define the data block so we can pass on configuration kwargs.
+        data_block = TinyTableFieldBlock(
             required=False,
-            allow_links=kwargs.get("allow_links", False),
-            enable_context_menu=kwargs.get("enable_context_menu", False),
+            allow_links=allow_links,
+            enable_context_menu=enable_context_menu,
         )
-        block.set_name("data")
-        self.child_blocks["data"] = block
+
+        local_blocks = (*local_blocks, ("data", data_block))
+        super().__init__(local_blocks=local_blocks, search_index=search_index, **kwargs)
 
     class Meta:
         icon = "table"
