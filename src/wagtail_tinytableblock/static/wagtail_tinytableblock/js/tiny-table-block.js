@@ -11,7 +11,7 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
       "th": "text-align,vertical-align,width",
       "td": "text-align,vertical-align,width",
       "tr": "text-align,width"
-    }
+    };
 
     if (this.meta.enableLinks) {
       plugins += " link autolink";
