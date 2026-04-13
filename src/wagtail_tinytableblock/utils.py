@@ -33,7 +33,7 @@ def sanitise_html(content: str, *, allow_links: bool = False) -> str:
     return sanitizer.clean(unescape(content))  # pylint: disable=no-member
 
 
-STYLE_PROPS_PATTERN = re.compile(r"([^\s:;]+)\s*:\s*([^;]+)")
+STYLE_PROPS_PATTERN: re.Pattern[str] = re.compile(r"([^\s:;]+)\s*:\s*([^;]+)")
 
 
 def clean_style_attributes(table: "Tag") -> None:
@@ -52,7 +52,12 @@ def clean_style_attributes(table: "Tag") -> None:
         if "style" not in tag.attrs:
             continue
 
-        matches = STYLE_PROPS_PATTERN.findall(tag["style"])
+        style: str = (
+            "; ".join(tag["style"])
+            if not isinstance(tag["style"], str)
+            else tag["style"]
+        )
+        matches = STYLE_PROPS_PATTERN.findall(style)
         filtered_styles = []
         for prop, value in matches:
             prop = prop.strip()
@@ -67,18 +72,20 @@ def clean_style_attributes(table: "Tag") -> None:
 
 def get_cell_data(cell: "Tag", forced_type: Cell | None = None) -> dict[str, str | int]:
     value = "".join(str(child) for child in cell.children)
-    cell_data = {"value": value, "type": forced_type or cell.name}
+    cell_data: dict[str, str | int] = {"value": value, "type": forced_type or cell.name}
 
-    if (rowspan := int(cell.get("rowspan", 1))) > 1:
+    if (rowspan := int(str(cell.get("rowspan", "1")))) > 1:
         cell_data["rowspan"] = rowspan
-    if (colspan := int(cell.get("colspan", 1))) > 1:
+    if (colspan := int(str(cell.get("colspan", "1")))) > 1:
         cell_data["colspan"] = colspan
     if scope := cell.get("scope"):
-        cell_data["scope"] = scope
+        cell_data["scope"] = str(scope)
     if align := cell.get("align"):
-        cell_data["align"] = align
+        cell_data["align"] = str(align)
 
     if style := cell.get("style"):
+        if not isinstance(style, str):
+            style = "; ".join(style)
         matches = dict(STYLE_PROPS_PATTERN.findall(style))
         if width := matches.get("width"):
             cell_data["width"] = width

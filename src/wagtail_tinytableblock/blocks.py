@@ -74,7 +74,7 @@ class TinyTableBlockAdapter(FieldBlockAdapter):
 
     @cached_property
     def media(self) -> Media:
-        field_media = super().media
+        field_media: Media = super().media
         js = [
             *field_media._js,  # pylint: disable=protected-access
             "wagtail_tinytableblock/js/vendor/tinymce/tinymce.min.js",
@@ -97,7 +97,7 @@ class TinyTableBlock(StructBlock):
         *,
         allow_links: bool = False,
         enable_context_menu: bool = False,
-        **kwargs
+        **kwargs,
     ) -> None:
         if local_blocks is None:
             local_blocks = ()
