@@ -84,6 +84,12 @@ class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(enable_context_menu=True)
 ```
 
+### Content Security Policy
+
+For [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) configuration guidance,
+follow the [TinyMCE documentation](https://www.tiny.cloud/docs/tinymce/latest/security/#configuring-content-security-policy-csp-for-tinymce) with
+the self-hosted option.
+
 
 ## Data representation
 
