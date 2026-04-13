@@ -120,6 +120,6 @@ All contributions are welcome! See [CONTRIBUTING.md](https://github.com/torchbox
 
 Supported versions:
 
-- Python 3.12, 3.13
-- Django 4.2, 5.1
-- Wagtail 6.3 (LTS), 6.4
+- Python 3.12, 3.13, 3.14
+- Django 4.2, 5.2, 6.0
+- Wagtail 6.3 (LTS), 7.0 (LTS), 7.3
