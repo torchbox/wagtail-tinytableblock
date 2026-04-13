@@ -84,6 +84,12 @@ class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(enable_context_menu=True)
 ```
 
+### Content Security Policy
+
+For [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) configuration guidance,
+follow the [TinyMCE documentation](https://www.tiny.cloud/docs/tinymce/latest/security/#configuring-content-security-policy-csp-for-tinymce) with
+the self-hosted option.
+
 
 ## Data representation
 
@@ -114,6 +120,6 @@ All contributions are welcome! See [CONTRIBUTING.md](https://github.com/torchbox
 
 Supported versions:
 
-- Python 3.12, 3.13
-- Django 4.2, 5.1
-- Wagtail 6.3 (LTS), 6.4
+- Python 3.12, 3.13, 3.14
+- Django 4.2, 5.2, 6.0
+- Wagtail 6.3 (LTS), 7.0 (LTS), 7.3
