@@ -17,7 +17,7 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
       plugins += " link autolink";
       toolbar += " | link unlink";
       contextmenu += " link";
-      valid_elements += ",a[href|target|rel]";
+      valid_elements += ",a[href|rel|title|target]";
     }
 
     let contextmenu_never_use_native = true;

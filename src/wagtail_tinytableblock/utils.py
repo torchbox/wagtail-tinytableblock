@@ -23,7 +23,7 @@ def sanitise_html(content: str, *, allow_links: bool = False) -> str:
     }
     if allow_links:
         tags |= {"a"}
-        attributes["a"] = {"href", "rel", "title"}
+        attributes["a"] = {"href", "rel", "title", "target"}
 
     sanitizer = Cleaner(
         tags=tags,
