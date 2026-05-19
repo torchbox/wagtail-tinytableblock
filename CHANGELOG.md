@@ -7,11 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.4.3] - 2026-05-19
+
+Note: this is the same as v0.4.2 with some tooling fixes
+
+### Fixed
+
+- Issue with PyPI Trusted Publishing post GitHub Actions version changes
+
 ## [0.4.2] - 2026-05-19
 
 ### Fixed
 
 - Fixed support for title and target attribute on links ([#24](https://github.com/torchbox/wagtail-tinytableblock/pull/24))
+- Hardened GitHub Actions and updated dependencies ([#21](https://github.com/torchbox/wagtail-tinytableblock/pull/21))
 
 ## [0.4.1] - 2026-03-10
 
@@ -103,8 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Initial release
 
 
-[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.2...HEAD
-[0.4.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.1...v0.4.2
+[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.3...HEAD
+[0.4.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.1...v0.4.3
 [0.4.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.4...v0.4.0
 [0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.3...v0.3.4
