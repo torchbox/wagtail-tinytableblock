@@ -55,7 +55,12 @@ jobs:
       - name: 🚀 Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b  # v1.14.0
         with:
-          attestations: true
+          # Do not perform attestation for things for TestPyPI. This is
+          # because there's nothing that would prevent a malicious PyPI from
+          # serving a signed TestPyPI asset in place of a release intended for
+          # PyPI.
+          attestations: false
+          repository-url: https://test.pypi.org/legacy/
 
   # https://docs.pypi.org/trusted-publishers/using-a-publisher/
   publish-pypi:
