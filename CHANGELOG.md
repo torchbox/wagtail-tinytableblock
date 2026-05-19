@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.4.2] - 2026-05-19
+
+### Fixed
+
+- Fixed support for title and target attribute on links ([#24](https://github.com/torchbox/wagtail-tinytableblock/pull/24))
+
 ## [0.4.1] - 2026-03-10
 
 ### Added
@@ -97,7 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Initial release
 
 
-[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.4...v0.4.0
 [0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.3...v0.3.4
