@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-## [0.4.4] - 2026-05-19
+## [0.4.5] - 2026-05-19
 
-Note: this is the same as v0.4.2 and 0.4.3 with some tooling fixes
+Note: this is the same as v0.4.2 - 0.4.4 with PyPI Trusted publishing fixes after updating GitHub Actions versions
 
 ### Fixed
 
@@ -107,7 +107,7 @@ Initial release
 
 
 [unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.4...HEAD
-[0.4.4]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.1...v0.4.4
+[0.4.5]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.1...v0.4.5
 [0.4.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.4...v0.4.0
 [0.3.3]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.3...v0.3.4
