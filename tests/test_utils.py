@@ -269,12 +269,14 @@ class UtilsTestCase(TestCase):
                 <tr>
                     <th data-test"foo" valign="middle" colspan="1">Header 1</th>
                     <th class="highlight" align="right">Header 2</th>
+                    <th>Header 3</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td rowspan="1"><a href="&#106avascript:alert(1)">Cell <strong>1</strong></a></td>
                     <td><a href="#" click='alert(\\'XSS\\')' rel="next">Cell 2</a></td>
+                    <td><a href="#" target="_blank" rel="noopener" title="Three">Cell 3</a></td>
                 </tr>
             </tbody>
         </table>
@@ -288,12 +290,14 @@ class UtilsTestCase(TestCase):
                 <tr>
                     <th colspan="1">Header 1</th>
                     <th class="highlight" align="right">Header 2</th>
+                    <th>Header 3</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td rowspan="1"><a>Cell 1</a></td>
                     <td><a href="#" rel="next">Cell 2</a></td>
+                    <td><a href="#" target="_blank" rel="noopener" title="Three">Cell 3</a></td>
                 </tr>
             </tbody>
         </table>
