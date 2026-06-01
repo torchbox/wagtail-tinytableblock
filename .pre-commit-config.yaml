@@ -2,7 +2,7 @@ ci:
   autofix_prs: false
 
 default_language_version:
-  python: python3.13
+  python: python3.14
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -20,7 +20,7 @@ repos:
       - id: trailing-whitespace
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # keep in sync with .github/workflows/ruff.yml
-    rev: 'v0.15.9'
+    rev: 'v0.15.14'
     hooks:
       - id: ruff-check
         args: [ --fix ]
