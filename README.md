@@ -18,9 +18,11 @@ TinyTableBlock is a StreamField block powered by [TinyMCE](https://www.tiny.clou
 Wagtail provides [`TableBlock`](https://docs.wagtail.org/en/stable/reference/contrib/table_block.html) and
 [`TypedTableBlock`](https://docs.wagtail.org/en/stable/reference/contrib/typed_table_block.html)
 which are good options if you want basic tables with some cell merging capability or StreamField-powered cell, but they have their limitations:
+
 - `TableBlock` is using an old version of [handsontable](https://github.com/handsontable/handsontable/tree/6.2.2). It doesn't support multi-row header, column headers, nor pasting complex tables.
 - `TypedTableBlock` gets complex quickly depending on the types of blocks you add, and pasting is limited to single cells.
 -
+
 Wagtail TinyTableBlock (this package) provides the TinyMCE table editor which has improved copy/paste, multi-row and column headers, external link support and more.
 It does not currently support the Wagtail rich text [data format](https://docs.wagtail.org/en/stable/extending/rich_text_internals.html#data-format) for page and document links,
 nor does it support embedding images.
@@ -84,12 +86,54 @@ class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(enable_context_menu=True)
 ```
 
+### Configuring Table Cell Rich Text Features
+
+You can customize which text formatting tools are available inside the table cells. By default, formatting features are turned **off** to keep table content clean. You can enable them per block or globally across your entire site.
+
+#### Supported Features
+
+The following formatting identifiers can be passed to the configuration arrays:
+
+- `bold`
+- `italic`
+- `strikethrough`
+- `subscript`
+- `superscript`
+- `blockquote`
+
+#### Per-Block Configuration
+
+Pass a `features` list directly to the `TinyTableBlock` definition in your `models.py`. This aligns directly with standard Wagtail RichTextField formatting controls:
+
+```python
+from wagtail.blocks import StreamBlock
+from wagtail_tinytableblock.blocks import TinyTableBlock
+
+class MyStreamBlock(StreamBlock):
+    table = TinyTableBlock(
+        features=['bold', 'italic', 'code'] # Only these options will appear in cell editor
+    )
+```
+
+#### Global Configuration (Django Settings)
+
+If you want to define a fallback list of formatting features for all tables across your website without repeating the code in every model, define `WAGTAIL_TINYTABLE` in your `settings.py`:
+
+```python
+# settings.py
+
+WAGTAIL_TINYTABLE = {
+    "features": ["bold", "italic", "strikethrough"]
+}
+```
+
+*Note: If no global settings are defined and no per-block features are provided, the features list defaults to empty (`[]`), disabling rich text formatting choices completely.*
+
 ### Content Security Policy
 
 For [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) configuration guidance,
 follow the [TinyMCE documentation](https://www.tiny.cloud/docs/tinymce/latest/security/#configuring-content-security-policy-csp-for-tinymce) with
 the self-hosted option.
-
 
 ## Data representation
 

@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING, Literal
 from bs4 import BeautifulSoup
 from nh3 import Cleaner
 
+from .settings import TEXT_FEATURE_MAPPING
+
 
 if TYPE_CHECKING:
     from bs4.element import Tag
@@ -13,7 +15,9 @@ if TYPE_CHECKING:
 Cell = Literal["td", "th"]
 
 
-def sanitise_html(content: str, *, allow_links: bool = False) -> str:
+def sanitise_html(
+    content: str, *, allow_links: bool = False, features: list[str] = None
+) -> str:
     tags: set[str] = {"table", "tr", "th", "td", "thead", "tbody", "caption", "br"}
     attributes: dict[str, set[str]] = {
         "*": {"class"},
@@ -24,6 +28,12 @@ def sanitise_html(content: str, *, allow_links: bool = False) -> str:
     if allow_links:
         tags |= {"a"}
         attributes["a"] = {"href", "rel", "title", "target"}
+
+    if features:
+        feature_tags = {
+            feature[1] for feature in TEXT_FEATURE_MAPPING if feature[0] in features
+        }
+        tags |= feature_tags
 
     sanitizer = Cleaner(
         tags=tags,
@@ -105,7 +115,9 @@ def check_all_cells_are_empty(rows: list[list[dict[str, str | int]]]) -> bool:
     return True
 
 
-def html_table_to_dict(content: str, *, allow_links: bool = False) -> dict:
+def html_table_to_dict(
+    content: str, *, allow_links: bool = False, features: list[str] = None
+) -> dict:
     """Take an HTML table and convert it to a dictionary.
 
     The dictionary has the following structure:
@@ -113,7 +125,7 @@ def html_table_to_dict(content: str, *, allow_links: bool = False) -> dict:
     - rows - a list of row lists, each containing the cell info
     - html - the original html
     """
-    content = sanitise_html(content, allow_links=allow_links)
+    content = sanitise_html(content, allow_links=allow_links, features=features)
     soup = BeautifulSoup(content, "html.parser")
 
     table = soup.find("table")
