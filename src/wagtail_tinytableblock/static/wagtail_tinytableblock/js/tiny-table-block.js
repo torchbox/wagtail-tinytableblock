@@ -109,17 +109,18 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
             // Get our block's caption element and set it.
             let caption = document.getElementById(prefix.replace("-data", "-caption"));
             if (caption) {
-             caption.value = match_caption[1].replace(/<[^>]*>/gm, "");
+              let parsed = new DOMParser().parseFromString(match_caption[1], "text/html").body.textContent.trim();
+              caption.value = parsed.replace(/<[^>]*>/gm, "");
             }
           }
-          args.content = args.content.replace(/<caption[^>]*>(.*?)<\/caption>/g, "");
+          args.content = args.content.replace(/<caption[^>]*>(.*?)<\/caption>/gi, "");
         }
       },
       paste_postprocess: function(editor, args) {
         if (editor.dom.getParent(editor.selection.getNode(), "td,th")) {
           // Replace newlines with <br> tags, and remove the trailing <br>
           args.node.innerHTML = args.node.innerHTML.replace(/\n/g, "<br>");
-          args.node.innerHTML = args.node.innerHTML.replace(/<br>$/, "");
+          args.node.innerHTML = args.node.innerHTML.replace(/<br>$/i, "");
         }
       }
     });
