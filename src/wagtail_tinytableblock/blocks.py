@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 from wagtail.blocks import Block, FieldBlock, StructBlock
 from wagtail.blocks.field_block import CharBlock, FieldBlockAdapter
 
-from .settings import TEXT_FEATURE_MAPPING
+from .constants import TEXT_FEATURE_MAPPING
 from .utils import html_table_to_dict
 
 

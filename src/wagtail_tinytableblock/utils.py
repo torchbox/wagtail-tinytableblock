@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Literal
 from bs4 import BeautifulSoup
 from nh3 import Cleaner
 
-from .settings import TEXT_FEATURE_MAPPING
+from .constants import TEXT_FEATURE_MAPPING
 
 
 if TYPE_CHECKING:
@@ -31,7 +31,9 @@ def sanitise_html(
 
     if features:
         feature_tags = {
-            html_tag for text_feature, html_tag in TEXT_FEATURE_MAPPING if text_feature in features
+            html_tag
+            for text_feature, html_tag in TEXT_FEATURE_MAPPING
+            if text_feature in features
         }
         tags |= feature_tags
 
