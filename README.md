@@ -105,15 +105,6 @@ The following formatting identifiers can be passed to the configuration arrays:
 
 Pass a `features` list directly to the `TinyTableBlock` definition in your `models.py`. This aligns directly with standard Wagtail RichTextField formatting controls:
 
-```python
-from wagtail.blocks import StreamBlock
-from wagtail_tinytableblock.blocks import TinyTableBlock
-
-class MyStreamBlock(StreamBlock):
-    table = TinyTableBlock(
-        features=['bold', 'italic', 'code'] # Only these options will appear in cell editor
-    )
-```
 
 #### Global Configuration (Django Settings)
 

@@ -31,7 +31,7 @@ def sanitise_html(
 
     if features:
         feature_tags = {
-            feature[1] for feature in TEXT_FEATURE_MAPPING if feature[0] in features
+            html_tag for text_feature, html_tag in TEXT_FEATURE_MAPPING if text_feature in features
         }
         tags |= feature_tags
 

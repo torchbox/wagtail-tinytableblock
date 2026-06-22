@@ -21,11 +21,11 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
     }
 
     if (this.meta.features) {
-      const buttons = this.meta.features.map(f => f[0]);
-      const tags = this.meta.features.map(f => f[1]);
+      const toolbar_buttons = this.meta.features.map(f => f[0]);
+      const elements = this.meta.features.map(f => f[1]);
 
-      toolbar = buttons.join(" ") + " | " + toolbar;
-      valid_elements += "," + tags.join(",");
+      toolbar = toolbar_buttons.join(" ") + " | " + toolbar;
+      valid_elements += "," + elements.join(",");
     }
 
     let contextmenu_never_use_native = true;
