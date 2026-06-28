@@ -1,9 +1,9 @@
 from unittest import skipIf
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from wagtail import VERSION as WAGTAIL_VERSION
 
-from wagtail_tinytableblock.blocks import TinyTableBlock
+from wagtail_tinytableblock.blocks import TinyTableBlock, TinyTableFieldBlock
 
 
 class BlockTestCase(TestCase):
@@ -78,3 +78,79 @@ class BlockTestCase(TestCase):
         block = TinyTableBlock(allow_links=True)
         form_children = block.get_form_layout().children
         self.assertEqual(["title", "caption", "data"], form_children)
+
+    def test_features_are_disabled_by_default_when_no_param_provided(self):
+        html = """
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>bold text</strong></td>
+                    <td><em>Cell 2</em></td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        block = TinyTableBlock()
+        data = block.child_blocks["data"].value_from_form(html)
+
+        rendered = block.render({"data": data})
+        self.assertNotInHTML("<strong>bold text</strong>", rendered)
+        self.assertNotInHTML("<em>Cell 2</em>", rendered)
+
+    def test_features_are_enabled_when_block_param_is_passed(self):
+        html = """
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>bold text</strong></td>
+                    <td><em>Cell 2</em></td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        block = TinyTableBlock(features=["bold"])
+        data = block.child_blocks["data"].value_from_form(html)
+
+        rendered = block.render({"data": data})
+        self.assertInHTML("<strong>bold text</strong>", rendered)
+        self.assertNotInHTML("<em>Cell 2</em>", rendered)
+
+    @override_settings(WAGTAIL_TINYTABLE={"features": ["bold", "italic"]})
+    def test_features_load_from_global_settings_when_no_param_provided(self):
+        html = """
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>bold text</strong></td>
+                    <td><em>Cell 2</em></td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        # field_block = TinyTableFieldBlock(allow_links=False, features=[])
+        block = TinyTableBlock()
+        data = block.child_blocks["data"].value_from_form(html)
+
+        rendered = block.render({"data": data})
+        self.assertInHTML("<strong>bold text</strong>", rendered)
+        self.assertInHTML("<em>Cell 2</em>", rendered)
+
+    @override_settings(WAGTAIL_TINYTABLE={"features": ["bold", "italic"]})
+    def test_features_param_takes_priority_over_global_settings(self):
+        html = """
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>bold text</strong></td>
+                    <td><em>Cell 2</em></td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        # field_block = TinyTableFieldBlock(allow_links=False, features=[])
+        block = TinyTableBlock(features=["bold"])
+        data = block.child_blocks["data"].value_from_form(html)
+
+        rendered = block.render({"data": data})
+        self.assertInHTML("<strong>bold text</strong>", rendered)
+        self.assertNotInHTML("<em>Cell 2</em>", rendered)
