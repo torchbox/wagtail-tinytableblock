@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.5.0] - 2026-06-29
+
 ### Added
 
-- Added common styling options (#27)
+- Support for common formatting options ([#30](https://github.com/torchbox/wagtail-tinytableblock/pull/30) by @dest81)
+  (mostly) aligned with the Wagtail [`RichTextField` formatting controls](https://docs.wagtail.org/en/stable/advanced_topics/customization/page_editing_interface.html#limiting-features-in-a-rich-text-field).
+  This can be configured per block via the `features` kwarg. Or globally, via the `WAGTAIL_TINYTABLE` setting.
+
 
 ## [0.4.5] - 2026-05-19
 
@@ -108,7 +113,8 @@ Note: this is the same as v0.4.2 - 0.4.4 with PyPI Trusted publishing fixes afte
 
 Initial release
 
-[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.5...HEAD
+[unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.5...v0.5.0
 [0.4.5]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.1...v0.4.5
 [0.4.1]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.3.4...v0.4.0
