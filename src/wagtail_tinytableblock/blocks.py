@@ -4,11 +4,13 @@ from collections.abc import Iterable
 from typing import Any
 
 from django import forms
+from django.conf import settings
 from django.forms import Media
 from django.utils.functional import cached_property
 from wagtail.blocks import Block, FieldBlock, StructBlock
 from wagtail.blocks.field_block import CharBlock, FieldBlockAdapter
 
+from .constants import TEXT_FEATURE_MAPPING
 from .utils import html_table_to_dict
 
 
@@ -47,7 +49,9 @@ class TinyTableFieldBlock(FieldBlock):
         try:
             return dict(json.loads(value))
         except (json.decoder.JSONDecodeError, TypeError, ValueError):
-            return html_table_to_dict(value, allow_links=self.meta.allow_links)
+            return html_table_to_dict(
+                value, allow_links=self.meta.allow_links, features=self.meta.features
+            )
 
     def value_for_form(self, value: dict | None) -> str:
         return json.dumps(value)
@@ -67,9 +71,15 @@ class TinyTableBlockAdapter(FieldBlockAdapter):
     def js_args(self, block) -> list:
         the_args = super().js_args(block)
 
+        features = block.meta.features
+
+        # for tinymce we need both: tinymce and html representations
+        tinymce_features = [
+            feature for feature in TEXT_FEATURE_MAPPING if feature[0] in features
+        ]
         the_args[2]["enableLinks"] = block.meta.allow_links
         the_args[2]["enableContextMenu"] = block.meta.enable_context_menu
-
+        the_args[2]["features"] = tinymce_features
         return the_args
 
     @cached_property
@@ -97,16 +107,21 @@ class TinyTableBlock(StructBlock):
         *,
         allow_links: bool = False,
         enable_context_menu: bool = False,
+        features: list[str] = None,
         **kwargs,
     ) -> None:
         if local_blocks is None:
             local_blocks = ()
+
+        if not features:
+            features = getattr(settings, "WAGTAIL_TINYTABLE", {}).get("features", [])
 
         # Manually define the data block so we can pass on configuration kwargs.
         data_block = TinyTableFieldBlock(
             required=False,
             allow_links=allow_links,
             enable_context_menu=enable_context_menu,
+            features=features,
         )
 
         local_blocks = (*local_blocks, ("data", data_block))
@@ -117,3 +132,4 @@ class TinyTableBlock(StructBlock):
         template = "wagtail_tinytableblock/table_block.html"
         allow_links = False
         enable_context_menu = False
+        features = None

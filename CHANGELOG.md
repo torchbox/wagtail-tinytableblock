@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Added
+
+- Added common styling options (#27)
+
 ## [0.4.5] - 2026-05-19
 
 Note: this is the same as v0.4.2 - 0.4.4 with PyPI Trusted publishing fixes after updating GitHub Actions versions
@@ -49,7 +53,6 @@ Note: this is the same as v0.4.2 - 0.4.4 with PyPI Trusted publishing fixes afte
 ### Fixed
 
 - Line breaks were stripped out ([#11](https://github.com/torchbox/wagtail-tinytableblock/pull/11))
-
 
 ## [0.3.1] - 2025-04-02
 
@@ -104,7 +107,6 @@ Note: this is the same as v0.4.2 - 0.4.4 with PyPI Trusted publishing fixes afte
 ## [0.1.0] - 2025-03-04
 
 Initial release
-
 
 [unreleased]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.5...HEAD
 [0.4.5]: https://github.com/torchbox/wagtail-tinytableblock/compare/v0.4.1...v0.4.5

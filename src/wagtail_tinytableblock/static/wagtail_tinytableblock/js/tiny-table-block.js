@@ -20,6 +20,14 @@ class TinyTableBlockDefinition extends window.wagtailStreamField.blocks.FieldBlo
       valid_elements += ",a[href|rel|title|target]";
     }
 
+    if (this.meta.features) {
+      const toolbar_buttons = this.meta.features.map(f => f[0]);
+      const elements = this.meta.features.map(f => f[1]);
+
+      toolbar = toolbar_buttons.join(" ") + " | " + toolbar;
+      valid_elements += "," + elements.join(",");
+    }
+
     let contextmenu_never_use_native = true;
     if (!this.meta.enableContextMenu) {
       contextmenu = false;

@@ -342,3 +342,53 @@ class UtilsTestCase(TestCase):
 
         sanitised = sanitise_html(html)
         self.assertEqual(sanitised.strip(), expected.strip())
+
+    def test_sanitisation__no_features(self):
+        html = """
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>Cell on<br> on two lines</strong></td>
+                    <td>Cell 2</td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        expected = """
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>Cell on<br> on two lines</strong></td>
+                    <td>Cell 2</td>
+                </tr>
+            </tbody>
+        </table>
+        """
+
+        sanitised = sanitise_html(html, features=["bold"])
+        self.assertEqual(sanitised.strip(), expected.strip())
+
+    def test_sanitisation__with_features(self):
+        html = """
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>Cell on<br> on two lines</strong></td>
+                    <td>Cell 2</td>
+                </tr>
+            </tbody>
+        </table>
+        """
+        expected = """
+        <table>
+            <tbody>
+                <tr>
+                    <td>Cell on<br> on two lines</td>
+                    <td>Cell 2</td>
+                </tr>
+            </tbody>
+        </table>
+        """
+
+        sanitised = sanitise_html(html)
+        self.assertEqual(sanitised.strip(), expected.strip())
