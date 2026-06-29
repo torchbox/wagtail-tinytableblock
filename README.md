@@ -86,11 +86,11 @@ class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(enable_context_menu=True)
 ```
 
-### Configuring Table Cell Rich Text Features
+### Configuring rich text features allowed in table cells
 
 You can customize which text formatting tools are available inside the table cells. By default, formatting features are turned **off** to keep table content clean. You can enable them per block or globally across your entire site.
 
-#### Supported Features
+#### Supported features
 
 The following formatting identifiers can be passed to the configuration arrays:
 
@@ -101,12 +101,12 @@ The following formatting identifiers can be passed to the configuration arrays:
 - `superscript`
 - `blockquote`
 
-#### Per-Block Configuration
+#### Block configuration
 
-Pass a `features` list directly to the `TinyTableBlock` definition in your `models.py`. This aligns directly with standard Wagtail RichTextField formatting controls:
+To enable per-block configuration, pass a `features` list directly to the `TinyTableBlock` definition in your `models.py`. This aligns directly with standard Wagtail [`RichTextField` formatting controls](https://docs.wagtail.org/en/stable/advanced_topics/customization/page_editing_interface.html#limiting-features-in-a-rich-text-field).
 
 
-#### Global Configuration (Django Settings)
+#### Global configuration (Django settings)
 
 If you want to define a fallback list of formatting features for all tables across your website without repeating the code in every model, define `WAGTAIL_TINYTABLE` in your `settings.py`:
 

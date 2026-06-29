@@ -2,11 +2,12 @@ from unittest import skipIf
 
 from django.test import TestCase, override_settings
 from wagtail import VERSION as WAGTAIL_VERSION
+from wagtail.test.utils import WagtailTestUtils
 
 from wagtail_tinytableblock.blocks import TinyTableBlock, TinyTableFieldBlock
 
 
-class BlockTestCase(TestCase):
+class BlockTestCase(WagtailTestUtils, TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.simple_table_data = {
