@@ -13,8 +13,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read # to fetch code (actions/checkout)
+permissions: {}
 
 env:
   FORCE_COLOR: '1' # Make tools pretty.
@@ -27,15 +26,24 @@ jobs:
   test-sqlite:
     name: Test with sqlite
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # to fetch code (actions/checkout)
+
     strategy:
       matrix:
-        python-version: ["3.12", "3.13"]
-        django: ["4.2"]
-        wagtail: ["6.3"]
-        db: ["sqlite"]
+        include:
+          - python-version: "3.12"
+            django: "5.2"
+            wagtail: "7.0"
+            db: "sqlite"
+          - python-version: "3.14"
+            django: "6.1"
+            wagtail: "8.0"
+            db: "sqlite"
+
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1  # v2.21.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -46,12 +54,12 @@ jobs:
             pypi.org:443
             api.github.com:443
 
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1  # v6.3.0
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -79,6 +87,9 @@ jobs:
   test-postgres:
     name: Test with Postgres
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # to fetch code (actions/checkout)
+
     strategy:
       matrix:
         python-version: ["3.12", "3.13", "3.14"]
@@ -102,7 +113,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1  # v2.21.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -113,11 +124,11 @@ jobs:
             pypi.org:443
             api.github.com:443
 
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1  # v6.3.0
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -150,7 +161,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1  # v2.21.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -160,10 +171,10 @@ jobs:
             github.com:443
             pypi.org:443
             api.github.com:443
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1  # v6.3.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         with:
           # Use latest Python, so it understands all syntax.
           python-version: ${{env.PYTHON_LATEST}}

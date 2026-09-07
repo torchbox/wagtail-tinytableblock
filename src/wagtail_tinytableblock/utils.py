@@ -16,7 +16,7 @@ Cell = Literal["td", "th"]
 
 
 def sanitise_html(
-    content: str, *, allow_links: bool = False, features: list[str] = None
+    content: str, *, allow_links: bool = False, features: list[str] | None = None
 ) -> str:
     tags: set[str] = {"table", "tr", "th", "td", "thead", "tbody", "caption", "br"}
     attributes: dict[str, set[str]] = {
@@ -118,7 +118,7 @@ def check_all_cells_are_empty(rows: list[list[dict[str, str | int]]]) -> bool:
 
 
 def html_table_to_dict(
-    content: str, *, allow_links: bool = False, features: list[str] = None
+    content: str, *, allow_links: bool = False, features: list[str] | None = None
 ) -> dict:
     """Take an HTML table and convert it to a dictionary.
 

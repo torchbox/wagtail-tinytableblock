@@ -4,7 +4,7 @@ from django.test import TestCase, override_settings
 from wagtail import VERSION as WAGTAIL_VERSION
 from wagtail.test.utils import WagtailTestUtils
 
-from wagtail_tinytableblock.blocks import TinyTableBlock, TinyTableFieldBlock
+from wagtail_tinytableblock.blocks import TinyTableBlock
 
 
 class BlockTestCase(WagtailTestUtils, TestCase):
