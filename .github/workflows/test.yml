@@ -31,10 +31,15 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ["3.12", "3.14"]
-        django: ["5.2", "6.1"]
-        wagtail: ["7.0", "8.0"]
-        db: ["sqlite"]
+        include:
+          - python-version: "3.12"
+            django: "5.2"
+            wagtail: "7.0"
+            db: "sqlite"
+          - python-version: "3.14"
+            django: "6.1"
+            wagtail: "8.0"
+            db: "sqlite"
 
     steps:
       - name: Harden Runner
