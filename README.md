@@ -33,8 +33,8 @@ In your project's Django settings, add the app your `INSTALLED_APPS` list (at th
 
 ```python
 INSTALLED_APPS = [
-  # ...
-  "wagtail_tinytableblock",
+    # ...
+    "wagtail_tinytableblock",
 ]
 ```
 
@@ -49,10 +49,12 @@ from wagtail_tinytableblock.blocks import TinyTableBlock
 
 
 class WonderfulPage(Page):
-    body = StreamField([
-        # ...
-        ("table", TinyTableBlock()),
-    ])
+    body = StreamField(
+        [
+            # ...
+            ("table", TinyTableBlock()),
+        ]
+    )
 ```
 
 Finally, run Django's `makemigrations` and `migrate` commands to apply any model field changes to your project
@@ -71,6 +73,7 @@ plugin. Note: this currently only works with external URLs.
 from wagtail.blocks import StreamBlock
 from wagtail_tinytableblock.blocks import TinyTableBlock
 
+
 class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(allow_links=True)
 ```
@@ -81,6 +84,7 @@ pass `enable_context_menu=True`:
 ```python
 from wagtail.blocks import StreamBlock
 from wagtail_tinytableblock.blocks import TinyTableBlock
+
 
 class ContentBlocks(StreamBlock):
     table_block = TinyTableBlock(enable_context_menu=True)
@@ -113,9 +117,7 @@ If you want to define a fallback list of formatting features for all tables acro
 ```python
 # settings.py
 
-WAGTAIL_TINYTABLE = {
-    "features": ["bold", "italic", "strikethrough"]
-}
+WAGTAIL_TINYTABLE = {"features": ["bold", "italic", "strikethrough"]}
 ```
 
 *Note: If no global settings are defined and no per-block features are provided, the features list defaults to empty (`[]`), disabling rich text formatting choices completely.*
@@ -131,11 +133,7 @@ the self-hosted option.
 The table data is saved as a JSON-serialized dictionary with the following keys:
 
 ```python
-{
-   "headers": [],
-   "rows": [],
-   "html": the_sanitised_html
-}
+{"headers": [], "rows": [], "html": the_sanitised_html}
 ```
 
 `headers` / `rows` are lists of lists with cell values. Each cell is a dictionary with the following keys

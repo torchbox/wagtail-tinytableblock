@@ -39,7 +39,7 @@ jobs:
           persist-credentials: false
 
       # Keep in sync with .pre-commit-config.yaml
-      - run: python -Im pip install --user ruff==0.15.14
+      - run: python -Im pip install --user ruff==0.16.5
 
       - name: Run ruff
         working-directory: ./src
