@@ -107,7 +107,7 @@ class TinyTableBlock(StructBlock):
         *,
         allow_links: bool = False,
         enable_context_menu: bool = False,
-        features: list[str] = None,
+        features: list[str] | None = None,
         **kwargs,
     ) -> None:
         if local_blocks is None:

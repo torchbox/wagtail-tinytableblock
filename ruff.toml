@@ -23,6 +23,8 @@ extend-ignore = [
 ]
 fixable = ["C4", "E", "F", "I", "UP"]
 
+[lint.per-file-ignores]
+"tests/**.py" = ["S105", "S106", "RUF012"]
 
 [lint.isort]
 known-first-party = ["src", "wagtail_tinytableblock"]
